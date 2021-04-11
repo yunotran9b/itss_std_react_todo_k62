@@ -40,6 +40,18 @@ function Todo() {
    const handleEnter = text => {
      putItems([...items,{key: getKey(), text: text, done: false}]);
    }
+   
+   const [filter, setFilter] = React.useState('ALL');
+   
+   const displayItems = items.filter( item => {
+     if (filter === 'ALL') return true;
+     if (filter === 'TODO') return !item.done;
+     if (filter === 'DONE') return item.done;
+   })
+   
+   const handleFilter = value => {
+     setFilter(value);
+   }
 
   return (
     <div className="panel">
@@ -49,7 +61,11 @@ function Todo() {
       <Input
         onEnter={handleEnter}
       />
-      {items.map(item => (
+      <Filter
+        value={filter}
+        onChange={handleFilter}
+      />
+      {displayItems.map(item => (
         <TodoItem
           key = {item.key}
           item = {item}
@@ -57,7 +73,7 @@ function Todo() {
         />
       ))}
       <div className="panel-block">
-        {items.length} items
+        {displayItems.length} items
       </div>
     </div>
   );
