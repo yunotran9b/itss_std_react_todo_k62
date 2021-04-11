@@ -13,7 +13,7 @@ function Input({onEnter}) {
   }
   
   const handleKeyDown = e => {
-    if (e.keyCode == 13) {
+    if (e.keyCode === 13) {
       onEnter(text);
       putText('');
     }
